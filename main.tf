@@ -1,24 +1,15 @@
-resource "aws_iam_policy" "politica_agendamento_ec2" {
+resource "aws_iam_policy" "Inicia_Desliga_EC2" {
   name        = var.policy_name
   description = var.policy_description
   policy      = <<EOF
 {
     "Version": "2012-10-17",
     "Statement": [
-        {           
-            "Effect": "Allow",
-            "Action": [
-                "logs:CreateLogGroup",
-                "logs:CreateLogStream",
-                "logs:PutLogEvents"
-            ],
-            "Resource": "arn:aws:logs:*:*:*"
-        },
         {
             "Effect": "Allow",
             "Action": [
-                "ec2:Start*",
-                "ec2:Stop*"              
+                "ec2:StartInstances",
+                "ec2:StopInstances"
             ],
             "Resource": "*"
         }
@@ -27,7 +18,7 @@ resource "aws_iam_policy" "politica_agendamento_ec2" {
 EOF
 }
 
-resource "aws_iam_role" "função_agendamento_ec2" {
+resource "aws_iam_role" "Inicia_Desliga_EC2" {
   name               = var.role_name
   description        = var.role_description
   assume_role_policy = <<EOF
@@ -48,7 +39,12 @@ resource "aws_iam_role" "função_agendamento_ec2" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "anexar_função_politica_de_agendamento_iam" {
-  role       = aws_iam_role.função_agendamento_ec2.name
-  policy_arn = aws_iam_policy.politica_agendamento_ec2.arn
+resource "aws_iam_role_policy_attachment" "anexar_politica_Inicia_Desliga_EC2_personalizada" {
+  role       = aws_iam_role.Inicia_Desliga_EC2.name
+  policy_arn = aws_iam_policy.Inicia_Desliga_EC2.arn
+}
+
+resource "aws_iam_role_policy_attachment" "anexar_politica_Inicia_Desliga_EC2_basica" {
+  role       = aws_iam_role.Inicia_Desliga_EC2.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
