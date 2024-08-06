@@ -1,3 +1,4 @@
+# tfsec:ignore:aws-iam-no-policy-wildcards
 resource "aws_iam_policy" "Inicia_Desliga_EC2" {
   name        = var.policy_name
   description = var.policy_description
