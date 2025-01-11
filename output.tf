@@ -4,4 +4,4 @@ output "iam_role_arn_ec2" {
 
 output "iam_role_arn_backup" {
   value = aws_iam_role.role_backup.arn
-}  
+}
